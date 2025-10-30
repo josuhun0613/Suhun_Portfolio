@@ -5,6 +5,12 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import CardGrid from '../components/CardGrid'
 import Timeline from '../components/Timeline'
+import Metrics from '../components/Metrics'
+import Principles from '../components/Principles'
+import Playbooks from '../components/Playbooks'
+import Endorsements from '../components/Endorsements'
+import Logos from '../components/Logos'
+import Reveal from '../components/Reveal'
 
 export default function Home() {
   return (
@@ -16,9 +22,7 @@ export default function Home() {
         <section className="py-16">
           <div className="container-narrow">
             <h2 className="section-title">About</h2>
-            <p className="mt-4 muted">
-              컨설팅과 개발의 교차점에서 문제를 구조화하고, 빠르게 구현하며, 결과로 증명합니다.
-            </p>
+            <p className="mt-4 muted">비즈니스 임팩트를 설계하는 컨설턴트/개발자</p>
             <CardGrid
               items={[
                 { title: '컨설팅 역량', desc: '문제정의, 가설수립, 데이터 기반 의사결정', href: '#', icon: 'strategy' },
@@ -26,6 +30,28 @@ export default function Home() {
                 { title: '임팩트', desc: '지표로 말하는 일; 전환/리텐션/생산성', href: '#', icon: 'impact' },
               ]}
             />
+          </div>
+        </section>
+
+        <section className="py-8 bg-gray-50">
+          <div className="container-narrow">
+            <Reveal><Metrics /></Reveal>
+          </div>
+        </section>
+
+        <section className="py-16">
+          <div className="container-narrow">
+            <h2 className="section-title">Principles</h2>
+            <p className="mt-4 muted">의사결정 휴리스틱과 일하는 방식</p>
+            <div className="mt-8"><Reveal><Principles /></Reveal></div>
+          </div>
+        </section>
+
+        <section className="py-16 bg-gray-50">
+          <div className="container-narrow">
+            <h2 className="section-title">Playbooks</h2>
+            <p className="mt-4 muted">우선순위·거버넌스·지표로 리스크를 관리합니다</p>
+            <div className="mt-8"><Reveal><Playbooks /></Reveal></div>
           </div>
         </section>
 
@@ -67,6 +93,15 @@ export default function Home() {
                 { title: '데이터로 말하기', desc: '지표는 이야기의 증거' },
               ]}
             />
+          </div>
+        </section>
+
+        <section className="py-16 bg-gray-50">
+          <div className="container-narrow">
+            <h2 className="section-title">Endorsements</h2>
+            <p className="mt-4 muted">함께 일한 분들의 한 줄 추천사</p>
+            <div className="mt-8"><Reveal><Endorsements /></Reveal></div>
+            <div className="mt-10"><Logos /></div>
           </div>
         </section>
 

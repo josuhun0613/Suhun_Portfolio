@@ -9,6 +9,11 @@
   --fg: #0a0a0a;
 }
 
+.dark :root {
+  --bg: #0b1220;
+  --fg: #f5f7fb;
+}
+
 html, body {
   height: 100%;
 }
@@ -30,5 +35,17 @@ body {
 .muted {
   @apply text-ink-600;
 }
+
+/* Focus visibility - high contrast, accessible rings */
+*:focus-visible {
+  @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white dark:ring-offset-[#0b1220];
+}
+
+.dark body {
+  @apply bg-[#0b1220] text-white;
+}
+
+.dark .section-title { @apply text-white; }
+.dark .muted { @apply text-white/70; }
 
 

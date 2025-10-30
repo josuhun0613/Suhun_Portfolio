@@ -11,6 +11,9 @@ export default function ContactPage() {
         <pre className="mt-3 text-xs bg-white p-3 rounded-md overflow-x-auto">
 {`<iframe src="https://docs.google.com/forms/d/e/FORM_ID/viewform?embedded=true" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>`}
         </pre>
+        <div className="mt-6">
+          <a href="https://forms.gle/" target="_blank" className="inline-block px-4 py-2 rounded-md bg-brand-500 hover:bg-brand-600 text-white font-semibold">Brief me (3문항)</a>
+        </div>
       </div>
     </div>
   )

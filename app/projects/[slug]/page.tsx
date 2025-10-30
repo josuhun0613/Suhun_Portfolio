@@ -16,6 +16,13 @@ export default function ProjectDetail({ params }: { params: { slug: string } }) 
       <p className="mt-4 muted">{project.summary}</p>
 
       <section className="mt-10 grid gap-8">
+        <div className="rounded-xl border border-dashed border-gray-300 p-4 bg-white">
+          <p className="text-sm muted">Before/After 이미지 슬롯 (나중에 교체)</p>
+          <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="h-40 bg-gray-50 rounded-md grid place-items-center text-xs text-ink-600">Before</div>
+            <div className="h-40 bg-gray-50 rounded-md grid place-items-center text-xs text-ink-600">After</div>
+          </div>
+        </div>
         <div>
           <h2 className="font-extrabold text-xl">문제</h2>
           <p className="mt-2 text-ink-700">문제 배경과 맥락을 기술합니다.</p>
