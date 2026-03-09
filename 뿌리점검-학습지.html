@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>늘푸른교회 - 뿌리점검</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d1b2a;
+            font-family: 'Noto Sans KR', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        /* 프린트 버튼 */
+        .print-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #1b3a5f 0%, #0f2744 100%);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+            background: linear-gradient(135deg, #254a73 0%, #1a3d5c 100%);
+        }
+
+        .print-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* 페이지 컨테이너 */
+        .pages-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: linear-gradient(180deg, #fefefe 0%, #f8f6f3 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+        }
+
+        /* 장식 요소 */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #1a365d 0%, #2c5282 25%, #3182ce 50%, #2c5282 75%, #1a365d 100%);
+        }
+
+        .corner-ornament {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.25;
+        }
+
+        .corner-ornament.top-left {
+            top: 25px;
+            left: 25px;
+            border-top: 2px solid #1a365d;
+            border-left: 2px solid #1a365d;
+        }
+
+        .corner-ornament.top-right {
+            top: 25px;
+            right: 25px;
+            border-top: 2px solid #1a365d;
+            border-right: 2px solid #1a365d;
+        }
+
+        .corner-ornament.bottom-left {
+            bottom: 25px;
+            left: 25px;
+            border-bottom: 2px solid #1a365d;
+            border-left: 2px solid #1a365d;
+        }
+
+        .corner-ornament.bottom-right {
+            bottom: 25px;
+            right: 25px;
+            border-bottom: 2px solid #1a365d;
+            border-right: 2px solid #1a365d;
+        }
+
+        /* 헤더 */
+        .header {
+            padding: 35px 45px 25px;
+            border-bottom: 2px solid #e2e8f0;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 18px;
+        }
+
+        .church-name {
+            font-size: 12px;
+            color: #1a365d;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .info-group {
+            display: flex;
+            gap: 25px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            font-size: 12px;
+            color: #4a5568;
+        }
+
+        .info-item span {
+            font-weight: 600;
+            padding-bottom: 4px;
+        }
+
+        .info-line {
+            width: 80px;
+            border-bottom: 1.5px solid #718096;
+        }
+
+        .title-section {
+            text-align: left;
+        }
+
+        .main-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a365d;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #4a5568;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* 콘텐츠 */
+        .content {
+            padding: 30px 45px;
+            height: calc(297mm - 140px - 110px); /* 페이지 높이 - 헤더 - 푸터 */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content.page2 {
+            height: calc(297mm - 70px - 110px); /* 페이지2는 헤더가 작음 */
+        }
+
+        .question-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+        }
+
+        .q-item {
+            position: relative;
+        }
+
+        .q-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .q-num {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c5282;
+            min-width: 32px;
+        }
+
+        .q-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: #2d3748;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .answer-area {
+            margin-left: 46px;
+            background: linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            height: 85px;
+            position: relative;
+        }
+
+        .answer-area::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            right: 15px;
+            top: 50%;
+            height: 1px;
+            background: repeating-linear-gradient(90deg, #a0aec0 0px, #a0aec0 4px, transparent 4px, transparent 8px);
+        }
+
+        .answer-area.large {
+            height: 120px;
+        }
+
+        .answer-area.large::before {
+            top: 33%;
+        }
+
+        .answer-area.large::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            right: 15px;
+            top: 66%;
+            height: 1px;
+            background: repeating-linear-gradient(90deg, #a0aec0 0px, #a0aec0 4px, transparent 4px, transparent 8px);
+        }
+
+        /* 페이지 2 헤더 (간소화) */
+        .header-simple {
+            padding: 30px 45px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-simple .title-small {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .header-simple .page-num {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        /* 푸터 */
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2c5282, transparent);
+        }
+
+        .footer-text {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a365d;
+            letter-spacing: 2px;
+        }
+
+        .footer-verse {
+            font-size: 11px;
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* 인쇄 설정 */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
+
+            .pages-container {
+                gap: 0;
+            }
+
+            .page {
+                width: 210mm;
+                height: 297mm;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+
+            .page::before,
+            .answer-area,
+            .corner-ornament {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+        </svg>
+        인쇄하기
+    </button>
+
+    <div class="pages-container">
+        <!-- 페이지 1 -->
+        <div class="page">
+            <div class="corner-ornament top-left"></div>
+            <div class="corner-ornament top-right"></div>
+            <div class="corner-ornament bottom-left"></div>
+            <div class="corner-ornament bottom-right"></div>
+
+            <div class="header">
+                <div class="header-top">
+                    <div class="church-name">늘푸른교회</div>
+                    <div class="info-group">
+                        <div class="info-item">
+                            <span>이름</span>
+                            <div class="info-line" style="width: 100px; height: 22px;"></div>
+                        </div>
+                        <div class="info-item">
+                            <span>날짜</span>
+                            <div class="info-line" style="height: 22px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title-section">
+                    <h1 class="main-title">뿌리점검</h1>
+                    <p class="subtitle">근본적인 생각에 관하여</p>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="question-list">
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">01.</span>
+                            <span class="q-text">신의 존재를 어떻게 증명할 수 있나요?</span>
+                        </div>
+                        <div class="answer-area"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">02.</span>
+                            <span class="q-text">신은 왜 자신의 존재를 똑똑히 드러내 보이지 않을까요?</span>
+                        </div>
+                        <div class="answer-area"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">03.</span>
+                            <span class="q-text">신은 우주만물의 창조주라는데 증명할 수 있을까요? 가능하다면 무엇으로?</span>
+                        </div>
+                        <div class="answer-area"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">04.</span>
+                            <span class="q-text">생물학자들은 인간도 오랜 진화 과정의 산물이라고 하는데, 신의 인간 창조와 어떻게 다를까요?</span>
+                        </div>
+                        <div class="answer-area"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">05.</span>
+                            <span class="q-text">신이 인간을 사랑했다면, 왜 고통과 불행과 죽음을 주었을까요?</span>
+                        </div>
+                        <div class="answer-area"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">06.</span>
+                            <span class="q-text">성경은 어떻게 만들어졌나요? 그것이 하나님의 말씀이라는 것을 어떻게 증명할 수 있나요?</span>
+                        </div>
+                        <div class="answer-area"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="footer-line"></div>
+                <div class="footer-text">늘푸른교회</div>
+                <div class="footer-verse">"네 시작은 미약하였으나 네 나중은 심히 창대하리라" - 욥기 8:7</div>
+            </div>
+        </div>
+
+        <!-- 페이지 2 -->
+        <div class="page">
+            <div class="corner-ornament top-left"></div>
+            <div class="corner-ornament top-right"></div>
+            <div class="corner-ornament bottom-left"></div>
+            <div class="corner-ornament bottom-right"></div>
+
+            <div class="header-simple">
+                <div class="title-small">뿌리점검</div>
+                <div class="page-num">2 / 2</div>
+            </div>
+
+            <div class="content page2">
+                <div class="question-list">
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">07.</span>
+                            <span class="q-text">종교란 무엇인지? 왜 인간에게 필요한가요?</span>
+                        </div>
+                        <div class="answer-area"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">08.</span>
+                            <span class="q-text">2천 년 전 태어나신 예수님을 믿지 않으면 지옥에 간다고 합니다. 그렇다면 예수님이 태어나시기 전에 태어난 조상들은 천국 갈 기회를 한 번도 얻지 못하고 지옥에 갔을까요?</span>
+                        </div>
+                        <div class="answer-area large"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">09.</span>
+                            <span class="q-text">사단(마귀)는 어떻게 존재하게 되었을까요? 그리고 왜 전지전능하신 하나님이 사단을 잡지 않고 계실까요?</span>
+                        </div>
+                        <div class="answer-area large"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">10.</span>
+                            <span class="q-text">하나님을 향한 원망을 가졌던 적 있나요? 있었다면 언제, 왜 그런 감정을 느꼈나요?</span>
+                        </div>
+                        <div class="answer-area large"></div>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q-header">
+                            <span class="q-num">11.</span>
+                            <span class="q-text">성경 속 혹은 신에 대한 궁금증이 있었나요? 있었다면 기록해주세요.</span>
+                        </div>
+                        <div class="answer-area large"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="footer-line"></div>
+                <div class="footer-text">늘푸른교회</div>
+                <div class="footer-verse">"진리를 알지니 진리가 너희를 자유롭게 하리라" - 요한복음 8:32</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

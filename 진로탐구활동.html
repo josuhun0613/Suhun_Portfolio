@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>진로탐구활동</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e8e8e8;
+            font-family: 'Noto Sans KR', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 상단 파란색 헤더 바 */
+        .header-bar {
+            background: linear-gradient(135deg, #2E7DD1 0%, #1a5ba0 100%);
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .year-semester {
+            color: rgba(255,255,255,0.85);
+            font-size: 10pt;
+            font-weight: 400;
+            margin-bottom: 2px;
+        }
+
+        .main-title {
+            color: #fff;
+            font-size: 26pt;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 8px;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.95);
+            border-radius: 4px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 9pt;
+        }
+
+        .info-box span {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .info-input {
+            width: 50px;
+            border: none;
+            border-bottom: 1px solid #999;
+            background: transparent;
+            font-size: 9pt;
+            text-align: center;
+        }
+
+        /* 콘텐츠 영역 */
+        .content {
+            padding: 20px 25px 30px 25px;
+        }
+
+        /* 질문 리스트 */
+        .question-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .q-item {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 0;
+        }
+
+        .q-item:last-child {
+            border-bottom: none;
+        }
+
+        .q-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .q-num {
+            background: #2E7DD1;
+            color: #fff;
+            font-size: 8pt;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .q-text {
+            font-size: 10pt;
+            font-weight: 500;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .answer-area {
+            background: #f5f7fa;
+            border-radius: 5px;
+            height: 32px;
+            margin-left: 35px;
+        }
+
+        /* 긴 답변이 필요한 질문 */
+        .answer-area.large {
+            height: 50px;
+        }
+
+        /* 푸터 아이콘 */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .crown-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(255, 193, 7, 0.4);
+        }
+
+        .crown-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: #fff;
+        }
+
+        /* 인쇄 설정 */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .page {
+                width: 100%;
+                min-height: 100%;
+                box-shadow: none;
+            }
+            .answer-area {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .header-bar {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .q-num {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header-bar">
+            <div class="header-left">
+                <div class="year-semester">2099년 1학기</div>
+                <div class="main-title">진로탐구활동</div>
+            </div>
+            <div class="header-right">
+                <div class="info-box">
+                    <span>학년</span>
+                    <input type="text" class="info-input">
+                </div>
+                <div class="info-box">
+                    <span>반</span>
+                    <input type="text" class="info-input">
+                </div>
+                <div class="info-box">
+                    <span>이름</span>
+                    <input type="text" class="info-input" style="width: 70px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="question-list">
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q1</span>
+                        <span class="q-text">내가 좋아하거나 즐겨하는 활동은 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q2</span>
+                        <span class="q-text">나의 장점이나 잘 할 수 있는 것은 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q3</span>
+                        <span class="q-text">나의 관심있는 직업을 적어보세요.</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q4</span>
+                        <span class="q-text">왜 이 직업을 선택한 이유는 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q5</span>
+                        <span class="q-text">이 직업이 하는 일은 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q6</span>
+                        <span class="q-text">이 직업에 필요한 능력은 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q7</span>
+                        <span class="q-text">이 직업의 장점과 단점은 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q8</span>
+                        <span class="q-text">이 직업을 갖기 위해 필요한 준비는 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q9</span>
+                        <span class="q-text">10년 후, 나는 어떤 일을 하고 있을까요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q10</span>
+                        <span class="q-text">나의 꿈을 이루기 위해 지금부터 할 수 있는 일은 무엇인가요?</span>
+                    </div>
+                    <div class="answer-area"></div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-header">
+                        <span class="q-num">Q11</span>
+                        <span class="q-text">진로에 대한 나만의 다짐을 적어보세요.</span>
+                    </div>
+                    <div class="answer-area large"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="crown-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
